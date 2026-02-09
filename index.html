@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acharya.edu | Empowering Nepal Through Quality Education</title>
+    <link rel="icon" type="image/png" href="assets/logo.jpeg" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- Animated Canvas Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Floating Orbs -->
+    <div class="floating-orbs">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <header id="header">
+      <nav>
+        <div class="logo-section">
+          <div class="logo-badge">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="logo-text">
+            <h1>ACHARYA.EDU</h1>
+            <p>Transforming Education</p>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#mission">Mission</a>
+          <a href="#achievements">Achievements</a>
+          <a href="#contact" class="cta-btn">Connect</a>
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <div class="hero-text">
+          <span class="hero-label">
+            <span class="label-icon">★</span>
+            Nepal's Premier Educational Platform
+          </span>
+          <h2>
+            Empowering Minds, <span class="highlight">Building the Future</span>
+          </h2>
+          <p>
+            Acharya.edu is revolutionizing education in Nepal by providing
+            exceptional learning experiences for students up to Grade 12. With a
+            commitment to excellence and a passion for teaching, we're creating
+            a generation of enlightened learners ready to transform the nation.
+          </p>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <h3>4.0</h3>
+              <p>GPA - Nepal Topper</p>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <h3>1000+</h3>
+              <p>Students Taught</p>
+            </div>
+            <div class="stat-item">
+              <div class="stat-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <h3>100%</h3>
+              <p>Dedication</p>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="image-glow"></div>
+          <div class="image-container">
+            <div class="video-wrapper">
+              <iframe
+                width="100%"
+                height="315"
+                src="https://www.youtube.com/embed/Wl0yaw2h9r0?si=trgKoFKGC5zpnMUf"
+                title="YouTube video player"
+                frameborder="0"
+                allow="
+                  accelerometer;
+                  autoplay;
+                  clipboard-write;
+                  encrypted-media;
+                  gyroscope;
+                  picture-in-picture;
+                "
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <div class="image-overlay"></div>
+            <div class="image-border"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="raymond-section" id="about">
+      <div class="section-header">
+        <p class="section-label">
+          <span class="label-line"></span>
+          About Acharya.edu
+          <span class="label-line"></span>
+        </p>
+        <h2>Transforming Lives Through Education</h2>
+        <p>
+          Acharya.edu is more than just an educational platform—it's a movement
+          dedicated to bringing meaningful change to Nepal's education
+          landscape. Our mission is to provide world-class learning
+          opportunities that inspire, empower, and prepare students for a
+          brighter tomorrow.
+        </p>
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="card-shine"></div>
+          <div class="pillar-icon">
+            <i class="fas fa-book-reader"></i>
+          </div>
+          <h3>Quality Education</h3>
+          <p>
+            Delivering comprehensive lessons for students from primary through
+            Grade 12, with a focus on conceptual clarity, practical application,
+            and exam excellence. Our teaching methodology combines traditional
+            values with modern pedagogical techniques.
+          </p>
+          <div class="card-arrow">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="card-shine"></div>
+          <div class="pillar-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3>Innovative Learning</h3>
+          <p>
+            Leveraging digital platforms including YouTube, Facebook, Instagram,
+            and WhatsApp to reach students wherever they are. Interactive
+            content, engaging explanations, and accessible resources make
+            learning both effective and enjoyable.
+          </p>
+          <div class="card-arrow">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+        <div class="pillar-card">
+          <div class="card-shine"></div>
+          <div class="pillar-icon">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3>Student-Centered Approach</h3>
+          <p>
+            Every student is unique, and so is their learning journey. We
+            provide personalized attention, clear doubt resolution, and
+            continuous support to ensure every student reaches their full
+            potential and achieves academic excellence.
+          </p>
+          <div class="card-arrow">
+            <i class="fas fa-arrow-right"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="journey-section" id="mission">
+      <div class="section-header">
+        <p class="section-label">
+          <span class="label-line"></span>
+          Our Mission & Vision
+          <span class="label-line"></span>
+        </p>
+        <h2>Building Nepal's Educational Future</h2>
+        <p>
+          Our vision extends beyond individual success—we're committed to
+          transforming Nepal's educational ecosystem and creating lasting
+          change.
+        </p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">Mission</div>
+          <div class="timeline-content">
+            <h3>Educating the Nation</h3>
+            <p>
+              To provide accessible, high-quality education that empowers
+              students across Nepal to achieve academic excellence, develop
+              critical thinking skills, and become confident, knowledgeable
+              citizens ready to contribute to society.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">Vision</div>
+          <div class="timeline-content">
+            <h3>Bringing Transformative Change</h3>
+            <p>
+              To revolutionize education in Nepal by making quality learning
+              accessible to every student, regardless of their location or
+              background. We envision a future where every Nepali student has
+              the tools, knowledge, and confidence to succeed.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">Values</div>
+          <div class="timeline-content">
+            <h3>Excellence, Integrity, Innovation</h3>
+            <p>
+              We believe in maintaining the highest standards of teaching,
+              fostering honest and transparent relationships with students, and
+              continuously innovating to improve educational outcomes. Our
+              commitment to these values drives everything we do.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">Impact</div>
+          <div class="timeline-content">
+            <h3>Creating National Change</h3>
+            <p>
+              Through dedicated teaching, innovative methods, and unwavering
+              commitment to student success, Acharya.edu is not just teaching
+              subjects—we're building confidence, inspiring dreams, and creating
+              the leaders who will shape Nepal's future.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="passion-section" id="achievements">
+      <div class="section-header">
+        <p class="section-label">
+          <span class="label-line"></span>
+          Excellence & Achievement
+          <span class="label-line"></span>
+        </p>
+        <h2>A Legacy of Academic Excellence</h2>
+        <p>
+          Founded by Nepal's BLE topper with a perfect 4.0 GPA and currently
+          pursuing a Bachelor's degree in Chemistry, Acharya.edu embodies the
+          spirit of achievement and continuous learning.
+        </p>
+      </div>
+      <div class="passion-grid">
+        <div class="passion-card">
+          <div class="passion-glow"></div>
+          <i class="fas fa-medal"></i>
+          <h3>BLE Nepal Topper</h3>
+          <p>
+            Achieved the highest distinction in the Basic Level Education (BLE)
+            examination across Nepal with a perfect 4.0 GPA. This achievement
+            reflects not just academic excellence, but a deep understanding of
+            effective learning strategies that we now share with our students.
+          </p>
+        </div>
+        <div class="passion-card">
+          <div class="passion-glow"></div>
+          <i class="fas fa-flask"></i>
+          <h3>Chemistry Excellence</h3>
+          <p>
+            Currently pursuing a Bachelor's degree in Chemistry, bringing
+            cutting-edge scientific knowledge and passion for the subject to our
+            students. This ongoing academic journey ensures our teaching remains
+            current, relevant, and inspiring.
+          </p>
+        </div>
+        <div class="passion-card">
+          <div class="passion-glow"></div>
+          <i class="fas fa-chalkboard-teacher"></i>
+          <h3>Multi-Platform Teaching</h3>
+          <p>
+            Maintaining an active presence across YouTube, Facebook, Instagram,
+            and WhatsApp to reach students through their preferred channels. Our
+            diverse digital presence ensures learning is always accessible,
+            engaging, and just a click away.
+          </p>
+        </div>
+        <div class="passion-card">
+          <div class="passion-glow"></div>
+          <i class="fas fa-globe-asia"></i>
+          <h3>National Impact</h3>
+          <p>
+            Committed to elevating educational standards across Nepal, one
+            student at a time. Through dedication, innovation, and a genuine
+            passion for teaching, we're contributing to building a more
+            educated, empowered, and prosperous nation.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+      <h2>Join Our Learning Community</h2>
+      <p>
+        Connect with us on social media and YouTube to access quality
+        educational content, live sessions, and personalized learning support.
+      </p>
+      <div class="social-links">
+        <a
+          href="https://www.youtube.com/@acharyaeduupdate7267"
+          target="_blank"
+          class="social-btn youtube-btn"
+        >
+          <i class="fab fa-youtube"></i>
+          <span>YouTube Channel</span>
+        </a>
+        <a
+          href="https://www.facebook.com/profile.php?id=100094028210342"
+          target="_blank"
+          class="social-btn"
+        >
+          <i class="fab fa-facebook"></i>
+          <span>Facebook</span>
+        </a>
+        <a
+          href="https://www.instagram.com/aashishacharya22?igsh=MmhvMzVjb2d2cW45"
+          target="_blank"
+          class="social-btn"
+        >
+          <i class="fab fa-instagram"></i>
+          <span>Instagram</span>
+        </a>
+        <a
+          href="https://wa.me/9779867507576"
+          target="_blank"
+          class="social-btn"
+        >
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp</span>
+        </a>
+      </div>
+
+      <div class="video-section">
+        <h3>Featured Educational Content</h3>
+        <div class="featured-video">
+          <iframe
+            width="100%"
+            height="315"
+            src="https://www.youtube.com/embed/lYL4-NhIWZs?si=lGAtOJIT0gGwUnzt"
+            title="YouTube video player"
+            frameborder="0"
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+            "
+            allowfullscreen
+          >
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        &copy; 2026 Acharya.edu. All Rights Reserved. | Empowering Nepal Through
+        Quality Education
+      </p>
+    </footer>
+
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
