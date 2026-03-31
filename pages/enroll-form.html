@@ -3,525 +3,855 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Acharya Edu Update – Home Tuition Admission Form</title>
+  <title>Enroll – Acharya.edu | Home Tuition Admission</title>
+  <link rel="icon" type="image/png" href="../assets/logo.jpeg" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap');
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --gold:        #c9a961;
+      --gold-light:  #d4b779;
+      --gold-dark:   #a68b4d;
+      --navy:        #0a1628;
+      --navy-light:  #152440;
+      --navy-lighter:#1f3354;
+      --white:       #ffffff;
+      --gray-light:  #e8e9eb;
+      --gray:        #8b8d94;
+      --accent:      #9b7e46;
+      --red:         #c0392b;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Barlow', sans-serif;
-      background: linear-gradient(135deg, #b8d0e8 0%, #8aafc8 100%);
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--gray-light);
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 36px 16px;
+      overflow-x: hidden;
     }
 
-    .form-wrapper {
-      background: linear-gradient(170deg, #ddeaf6 0%, #bfd4e8 60%, #adc5db 100%);
-      border: 1.5px solid #9ab8cf;
-      border-radius: 8px;
-      width: 100%;
-      max-width: 720px;
-      padding: 30px 36px 38px;
-      box-shadow: 0 8px 32px rgba(0,40,80,0.18), 0 1.5px 0 rgba(255,255,255,0.5) inset;
+    /* ── Canvas & Orbs ── */
+    #particleCanvas {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+    }
+    .floating-orbs {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; overflow: hidden;
+    }
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); opacity: 0.15;
+      animation: float-orb 20s ease-in-out infinite;
+    }
+    .orb-1 { width:500px;height:500px;background:radial-gradient(circle,var(--gold),transparent);top:10%;left:-10%;animation-delay:0s; }
+    .orb-2 { width:400px;height:400px;background:radial-gradient(circle,var(--gold-light),transparent);top:50%;right:-5%;animation-delay:7s; }
+    .orb-3 { width:600px;height:600px;background:radial-gradient(circle,var(--accent),transparent);bottom:-20%;left:30%;animation-delay:14s; }
+    @keyframes float-orb {
+      0%,100% { transform:translate(0,0) scale(1); }
+      33%      { transform:translate(50px,-50px) scale(1.1); }
+      66%      { transform:translate(-30px,30px) scale(0.9); }
     }
 
-    .header {
-      border: 1.5px solid #8aafc8;
-      border-radius: 5px;
-      padding: 16px 20px;
-      margin-bottom: 20px;
-      background: rgba(255,255,255,0.22);
-      text-align: center;
+    /* ── Header ── */
+    header {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(10,22,40,0.85);
+      backdrop-filter: blur(20px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(201,169,97,0.15);
+      transition: all 0.3s ease;
     }
-    .header h1 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.55rem;
-      font-weight: 800;
-      color: #0f2d47;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+    header.scrolled { background: rgba(10,22,40,0.97); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+    nav {
+      max-width: 1200px; margin: 0 auto;
+      padding: 18px 60px;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .header .sub1 { font-size: 0.8rem; color: #1e4a6e; margin-top: 3px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
-    .header .sub2 { margin-top: 6px; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.5px; color: #0f2d47; }
+    .logo-section { display:flex; align-items:center; gap:14px; text-decoration:none; }
+    .logo-badge {
+      width:44px; height:44px;
+      background: linear-gradient(135deg,var(--gold),var(--gold-dark));
+      border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 4px 20px rgba(201,169,97,0.3);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    .logo-badge i { font-size:20px; color:var(--navy); }
+    @keyframes pulse-glow {
+      0%,100% { box-shadow:0 4px 20px rgba(201,169,97,0.3); transform:scale(1); }
+      50%      { box-shadow:0 6px 30px rgba(201,169,97,0.5); transform:scale(1.05); }
+    }
+    .logo-text h1 { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--gold); letter-spacing:1px; }
+    .logo-text p  { font-size:11px; color:var(--gray); letter-spacing:2px; text-transform:uppercase; margin-top:2px; }
+    .back-btn {
+      display:inline-flex; align-items:center; gap:9px;
+      padding:10px 24px;
+      background: rgba(201,169,97,0.08);
+      border: 1px solid rgba(201,169,97,0.35);
+      border-radius:8px;
+      color:var(--gold); font-size:14px; font-weight:600;
+      text-decoration:none; letter-spacing:0.3px;
+      transition: all 0.3s ease;
+      position:relative; overflow:hidden;
+    }
+    .back-btn::before {
+      content:''; position:absolute; top:50%; left:50%;
+      width:0; height:0; border-radius:50%;
+      background:rgba(201,169,97,0.15);
+      transform:translate(-50%,-50%);
+      transition: width 0.5s, height 0.5s;
+    }
+    .back-btn:hover::before { width:300px; height:300px; }
+    .back-btn:hover { background:rgba(201,169,97,0.15); border-color:var(--gold); transform:translateY(-2px); box-shadow:0 8px 24px rgba(201,169,97,0.25); }
+    .back-btn i { font-size:13px; transition: transform 0.3s; }
+    .back-btn:hover i { transform: translateX(-4px); }
 
-    .section-note { font-size: 0.75rem; color: #1e4a6e; font-style: italic; margin-bottom: 18px; }
+    /* ── Page wrapper ── */
+    .page-wrapper {
+      position: relative; z-index: 1;
+      padding: 130px 20px 80px;
+      max-width: 800px; margin: 0 auto;
+    }
 
-    .field-label { font-size: 0.6rem; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; color: #2a5070; margin-bottom: 5px; display: block; }
-    .field-label .req { color: #c0392b; margin-left: 2px; }
+    /* ── Page heading ── */
+    .page-heading {
+      text-align: center; margin-bottom: 50px;
+      animation: fade-in-up 0.7s ease-out both;
+    }
+    .page-label {
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 22px;
+      background:rgba(201,169,97,0.08);
+      border:1px solid rgba(201,169,97,0.25);
+      border-radius:30px;
+      font-size:12px; font-weight:600; letter-spacing:1.5px;
+      color:var(--gold); text-transform:uppercase;
+      margin-bottom:22px;
+    }
+    .page-heading h2 {
+      font-family:'Playfair Display',serif;
+      font-size:42px; font-weight:700;
+      color:var(--white); line-height:1.2; margin-bottom:14px;
+    }
+    .page-heading h2 span {
+      background:linear-gradient(135deg,var(--gold),var(--gold-light));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .page-heading p { font-size:16px; color:var(--gray); line-height:1.7; }
 
+    @keyframes fade-in-up {
+      from { opacity:0; transform:translateY(28px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── Form card ── */
+    .form-card {
+      background: rgba(21,36,64,0.6);
+      border: 1px solid rgba(201,169,97,0.18);
+      border-radius: 20px;
+      padding: 48px 52px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+      animation: fade-in-up 0.7s ease-out 0.15s both;
+      position: relative; overflow: hidden;
+    }
+    .form-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold-dark));
+      background-size:200%;
+      animation: shimmer-bar 3s linear infinite;
+    }
+    @keyframes shimmer-bar {
+      0%   { background-position:0% 50%; }
+      100% { background-position:200% 50%; }
+    }
+
+    /* ── Section divider inside form ── */
+    .form-section-title {
+      font-family:'Playfair Display',serif;
+      font-size:15px; font-weight:600; color:var(--gold);
+      letter-spacing:0.5px; margin-bottom:20px; margin-top:6px;
+      display:flex; align-items:center; gap:12px;
+    }
+    .form-section-title::after {
+      content:''; flex:1; height:1px;
+      background:linear-gradient(90deg,rgba(201,169,97,0.4),transparent);
+    }
+
+    .sep { border:none; border-top:1px solid rgba(201,169,97,0.12); margin:28px 0; }
+
+    /* ── Field labels ── */
+    .field-label {
+      display:block; font-size:11px; font-weight:600;
+      letter-spacing:1.2px; text-transform:uppercase;
+      color:var(--gold-light); margin-bottom:7px; opacity:0.85;
+    }
+    .field-label .req { color:var(--red); margin-left:2px; }
+
+    /* ── Inputs ── */
     input[type="text"], input[type="email"], input[type="tel"],
-    input[type="number"], input[type="datetime-local"], select, textarea {
-      width: 100%;
-      background: rgba(255,255,255,0.48);
-      border: 1px solid rgba(100,150,185,0.35);
-      border-radius: 4px;
-      height: 36px;
-      padding: 0 10px;
-      font-size: 0.84rem;
-      font-family: 'Barlow', sans-serif;
-      color: #0f2d47;
+    input[type="datetime-local"], select, textarea {
+      width:100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,169,97,0.2);
+      border-radius: 8px;
+      height: 42px; padding: 0 14px;
+      font-size: 14px; font-family:'Inter',sans-serif;
+      color: var(--gray-light);
       outline: none;
-      transition: background 0.18s, border-color 0.18s;
-      appearance: none;
-      -webkit-appearance: none;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+      appearance: none; -webkit-appearance: none;
     }
-    input[type="datetime-local"] { padding: 0 8px; }
-    input:focus, select:focus, textarea:focus { background: rgba(255,255,255,0.78); border-color: #5a90bb; }
-    input.invalid, select.invalid { border-color: #c0392b !important; background: rgba(255,220,215,0.55) !important; }
+    input[type="datetime-local"] { padding:0 12px; color-scheme:dark; }
+    textarea { height:80px; padding:12px 14px; resize:none; }
+    input::placeholder, textarea::placeholder { color:rgba(139,141,148,0.6); }
+    input:focus, select:focus, textarea:focus {
+      background:rgba(201,169,97,0.06);
+      border-color:rgba(201,169,97,0.55);
+      box-shadow:0 0 0 3px rgba(201,169,97,0.1);
+    }
+    input.invalid, select.invalid {
+      border-color:rgba(192,57,43,0.7) !important;
+      background:rgba(192,57,43,0.06) !important;
+      box-shadow:0 0 0 3px rgba(192,57,43,0.1) !important;
+    }
     select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232a5070' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; cursor: pointer;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a961' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 12px center;
+      padding-right:34px; cursor:pointer;
     }
-    textarea { height: 72px; padding: 8px 10px; resize: none; }
+    select option { background:var(--navy-lighter); color:var(--gray-light); }
 
-    .err-msg { font-size: 0.58rem; font-weight: 700; color: #c0392b; letter-spacing: 0.5px; margin-top: 4px; display: none; }
-    .err-msg.show { display: block; }
-
-    .field-group { display: flex; flex-direction: column; }
-
-    .row { display: grid; gap: 12px; margin-bottom: 14px; align-items: end; }
-    .row-3-col  { grid-template-columns: 140px 1fr 1fr; }
-    .row-dob    { grid-template-columns: auto 1fr 1fr; }
-    .row-2-col  { grid-template-columns: 1fr 1fr; }
-    .row-email  { grid-template-columns: 1fr 180px; }
-    .row-biz    { grid-template-columns: 1fr 1fr; }
-
-    .dob-inputs { display: flex; gap: 6px; }
-    .dob-inputs input { text-align: center; }
-    .dob-inputs input.dob-dd, .dob-inputs input.dob-mm { width: 52px; flex-shrink: 0; }
-    .dob-inputs input.dob-yyyy { width: 70px; flex-shrink: 0; }
-
-    .hours-pair { display: flex; gap: 6px; }
-    .hours-pair input { flex: 1; }
-
-    /* Address grid: single column since zip removed */
-    .address-grid { display: grid; grid-template-columns: 1fr 150px; gap: 12px; margin-bottom: 14px; align-items: start; }
-    .address-right-stack { display: flex; flex-direction: column; gap: 10px; }
-
-    .sep { border: none; border-top: 1.5px solid rgba(100,150,185,0.4); margin: 18px 0; }
-
-    .system-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
-    .system-cell {
-      border: 1.5px solid #8aafc8; border-radius: 4px; background: rgba(255,255,255,0.22);
-      padding: 9px 14px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    /* ── Error messages ── */
+    .err-msg {
+      font-size:11px; font-weight:600; color:#e74c3c;
+      letter-spacing:0.4px; margin-top:5px; display:none;
     }
-    .system-cell .sc-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #2a5070; white-space: nowrap; }
-    .system-cell .sc-label .req { color: #c0392b; margin-left: 2px; }
-    .system-cell input, .system-cell select {
-      flex: 1; background: transparent; border: none;
-      border-bottom: 1px solid rgba(100,150,185,0.5); border-radius: 0;
-      padding: 0 2px; height: 26px; font-size: 0.84rem; min-width: 0;
-    }
-    .system-cell select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232a5070' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 6px center; padding-right: 22px;
-    }
-    .system-cell input:focus, .system-cell select:focus { background: transparent; border-color: #5a90bb; }
-    .system-cell input.invalid { border-bottom-color: #c0392b !important; background: transparent !important; }
-    .system-cell.amount-cell { background: rgba(255,255,255,0.22); }
-    .system-cell.amount-cell .sc-label { font-size: 0.9rem; font-weight: 700; color: #0f2d47; letter-spacing: 0.5px; }
-    .system-cell.advance-cell { background: #7a9eb5; }
-    .system-cell.advance-cell .sc-label { font-size: 0.9rem; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
-    .system-cell.advance-cell input { color: #fff; border-bottom-color: rgba(255,255,255,0.5); }
-    .system-cell input[type="datetime-local"] {
-      background: transparent; border: none; border-bottom: 1px solid rgba(100,150,185,0.5);
-      border-radius: 0; height: 26px; padding: 0 2px; font-size: 0.78rem; color: #0f2d47; flex: 1;
-    }
-    .system-cell-err { width: 100%; font-size: 0.58rem; font-weight: 700; color: #c0392b; letter-spacing: 0.5px; display: none; margin-top: 2px; }
-    .system-cell-err.show { display: block; }
+    .err-msg.show { display:block; }
 
-    .terms { text-align: center; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.6px; color: #0f2d47; text-transform: uppercase; margin: 20px 0 18px; line-height: 1.5; }
+    /* ── Grid layouts ── */
+    .field-group { display:flex; flex-direction:column; }
+    .row { display:grid; gap:16px; margin-bottom:18px; align-items:end; }
+    .col-3   { grid-template-columns:130px 1fr 1fr; }
+    .col-2   { grid-template-columns:1fr 1fr; }
+    .col-2-w { grid-template-columns:1fr 160px; }
+    .col-1   { grid-template-columns:1fr; }
 
-    /* Signature section — only name display boxes, no signature lines */
-    .sig-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 6px; }
-    .sig-box { border: 1.5px solid #8aafc8; border-radius: 4px; background: rgba(255,255,255,0.22); padding: 10px 14px 14px; }
-    .sig-box .sig-role { font-size: 0.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #2a5070; }
-    .sig-box .sig-name { font-size: 0.85rem; font-weight: 600; color: #0f2d47; margin-top: 3px; }
+    .dob-inputs { display:flex; gap:8px; }
+    .dob-inputs input { text-align:center; }
+    .dob-dd, .dob-mm { width:56px !important; flex-shrink:0; }
+    .dob-yyyy { width:76px !important; flex-shrink:0; }
 
-    /* ── SUBMIT BUTTON ── */
-    .submit-wrap { text-align: center; margin: 24px 0 10px; }
+    .hours-pair { display:flex; gap:8px; }
+    .hours-pair input { flex:1; }
+
+    .address-grid { display:grid; grid-template-columns:1fr 140px; gap:16px; margin-bottom:18px; align-items:start; }
+
+    /* ── System cells (dates, payment, etc.) ── */
+    .sys-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+    .sys-cell {
+      border:1px solid rgba(201,169,97,0.2);
+      border-radius:10px;
+      background:rgba(255,255,255,0.03);
+      padding:12px 16px;
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .sys-cell:focus-within {
+      border-color:rgba(201,169,97,0.5);
+      background:rgba(201,169,97,0.04);
+    }
+    .sys-cell .sc-label {
+      font-size:11px; font-weight:600; letter-spacing:1px;
+      text-transform:uppercase; color:var(--gold); white-space:nowrap; opacity:0.85;
+    }
+    .sys-cell .sc-label .req { color:var(--red); margin-left:2px; }
+    .sys-cell input, .sys-cell select {
+      flex:1; background:transparent; border:none; border-bottom:1px solid rgba(201,169,97,0.25);
+      border-radius:0; padding:0 4px; height:28px; font-size:14px; min-width:0;
+      box-shadow:none !important; color:var(--gray-light);
+    }
+    .sys-cell select {
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a961' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 4px center; padding-right:20px;
+    }
+    .sys-cell input:focus, .sys-cell select:focus { border-bottom-color:var(--gold); background:transparent; }
+    .sys-cell input.invalid { border-bottom-color:rgba(192,57,43,0.8) !important; }
+    .sys-cell input[type="datetime-local"] { font-size:13px; color-scheme:dark; }
+
+    /* Highlighted cells */
+    .sys-cell.cell-gold { background:rgba(201,169,97,0.08); border-color:rgba(201,169,97,0.3); }
+    .sys-cell.cell-gold .sc-label { font-size:13px; font-weight:700; opacity:1; }
+    .sys-cell.cell-dark { background:rgba(201,169,97,0.15); border-color:rgba(201,169,97,0.4); }
+    .sys-cell.cell-dark .sc-label { font-size:13px; font-weight:700; color:var(--gold-light); opacity:1; }
+    .sys-cell.cell-dark input { color:var(--gold-light); border-bottom-color:rgba(201,169,97,0.4); }
+    .sys-cell.cell-dark input::placeholder { color:rgba(201,169,97,0.4); }
+
+    .sys-cell-err { width:100%; font-size:11px; font-weight:600; color:#e74c3c; letter-spacing:0.4px; display:none; margin-top:4px; }
+    .sys-cell-err.show { display:block; }
+
+    /* ── Names / Tutor row ── */
+    .name-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:0; }
+    .name-box {
+      border:1px solid rgba(201,169,97,0.2);
+      border-radius:10px;
+      background:rgba(255,255,255,0.03);
+      padding:14px 18px;
+    }
+    .name-box .nb-role { font-size:10px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--gold); opacity:0.7; }
+    .name-box .nb-name { font-family:'Playfair Display',serif; font-size:16px; color:var(--white); margin-top:4px; font-weight:600; min-height:22px; }
+
+    /* ── Terms ── */
+    .terms {
+      text-align:center; font-size:12px; font-weight:500;
+      letter-spacing:0.4px; color:var(--gray);
+      margin:28px 0 24px; line-height:1.6;
+    }
+    .terms span { color:var(--gold); font-weight:600; }
+
+    /* ── Banner ── */
+    .form-banner {
+      display:none; border-radius:10px; padding:14px 18px;
+      margin-bottom:24px; font-size:14px; font-weight:600;
+      letter-spacing:0.2px; text-align:center;
+    }
+    .form-banner.success { background:rgba(39,174,96,0.1); border:1px solid rgba(39,174,96,0.4); color:#2ecc71; }
+    .form-banner.error   { background:rgba(192,57,43,0.1); border:1px solid rgba(192,57,43,0.4); color:#e74c3c; }
+    .form-banner.show { display:block; }
+
+    /* ── Submit button ── */
+    .submit-wrap { text-align:center; margin-top:32px; }
     .btn-submit {
-      background: linear-gradient(135deg, #1e4a6e 0%, #2e6ea0 100%);
-      color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem;
-      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      border: none; border-radius: 5px; padding: 12px 48px; cursor: pointer;
-      box-shadow: 0 4px 16px rgba(0,40,80,0.22); transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+      background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+      color:var(--navy); font-family:'Inter',sans-serif; font-size:14px;
+      font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+      border:none; border-radius:10px; padding:15px 56px; cursor:pointer;
+      box-shadow:0 6px 24px rgba(201,169,97,0.35);
+      transition:all 0.3s ease; position:relative; overflow:hidden;
     }
-    .btn-submit:hover { background: linear-gradient(135deg, #163a58 0%, #245c8a 100%); box-shadow: 0 6px 22px rgba(0,40,80,0.30); transform: translateY(-1px); }
-    .btn-submit:active { transform: translateY(0); }
-    .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
-
-    /* ── BANNER ── */
-    .form-banner { display: none; border-radius: 5px; padding: 12px 16px; margin-bottom: 18px; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.3px; text-align: center; }
-    .form-banner.success { background: rgba(39,174,96,0.15); border: 1.5px solid #27ae60; color: #1a6e3c; }
-    .form-banner.error   { background: rgba(192,57,43,0.12);  border: 1.5px solid #c0392b; color: #7b1e13; }
-    .form-banner.show { display: block; }
-
-    /* ── FOOTER ── */
-    .footer { text-align: center; margin-top: 18px; }
-    .footer .sub-text { font-weight: 700; font-size: 0.88rem; color: #0f2d47; margin-bottom: 6px; }
-    .yt-row { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; }
-    .yt-row:hover .yt-text { text-decoration: underline; }
-    .yt-icon { width: 32px; height: 23px; background: #ff0000; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .yt-icon::after { content: ''; border-style: solid; border-width: 6px 0 6px 13px; border-color: transparent transparent transparent #fff; margin-left: 2px; }
-    .yt-text { font-weight: 700; font-size: 0.88rem; color: #0f2d47; line-height: 1.45; text-align: left; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      body { padding: 16px 10px; }
-      .form-wrapper { padding: 18px 14px 24px; }
-      .header h1 { font-size: 1.15rem; }
-      .row-3-col, .row-dob, .row-2-col, .row-email, .row-biz { grid-template-columns: 1fr; }
-      .dob-inputs { justify-content: flex-start; }
-      .address-grid { grid-template-columns: 1fr; }
-      .address-right-stack { flex-direction: row; gap: 10px; }
-      .address-right-stack .field-group { flex: 1; }
-      .hours-pair { flex-direction: row; }
-      .system-row { grid-template-columns: 1fr; }
-      .sig-row { grid-template-columns: 1fr; }
-      .system-cell input[type="datetime-local"] { font-size: 0.72rem; }
-      .btn-submit { width: 100%; padding: 13px 20px; }
+    .btn-submit::before {
+      content:''; position:absolute; top:50%; left:50%;
+      width:0; height:0; border-radius:50%;
+      background:rgba(255,255,255,0.25);
+      transform:translate(-50%,-50%);
+      transition:width 0.5s, height 0.5s;
     }
-    @media (min-width: 601px) and (max-width: 720px) {
-      .form-wrapper { padding: 22px 20px 30px; }
-      .row-3-col { grid-template-columns: 120px 1fr 1fr; }
-      .address-grid { grid-template-columns: 1fr 140px; }
-      .row-email { grid-template-columns: 1fr 150px; }
+    .btn-submit:hover::before { width:400px; height:400px; }
+    .btn-submit:hover { transform:translateY(-3px); box-shadow:0 12px 36px rgba(201,169,97,0.5); }
+    .btn-submit:active { transform:translateY(0); }
+    .btn-submit:disabled { opacity:0.55; cursor:not-allowed; transform:none; }
+
+    /* ── Footer note ── */
+    .form-footer {
+      text-align:center; margin-top:36px;
+    }
+    .form-footer p { font-size:12px; color:var(--gray); margin-bottom:14px; }
+    .yt-link {
+      display:inline-flex; align-items:center; gap:10px;
+      text-decoration:none; padding:10px 20px;
+      border:1px solid rgba(201,169,97,0.2); border-radius:8px;
+      background:rgba(255,255,255,0.02);
+      transition:all 0.3s ease;
+    }
+    .yt-link:hover { border-color:rgba(201,169,97,0.5); background:rgba(201,169,97,0.06); transform:translateY(-2px); }
+    .yt-icon { width:30px; height:22px; background:#ff0000; border-radius:5px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .yt-icon::after { content:''; border-style:solid; border-width:5px 0 5px 11px; border-color:transparent transparent transparent #fff; margin-left:2px; }
+    .yt-text { font-size:13px; font-weight:600; color:var(--gold-light); text-align:left; line-height:1.4; }
+
+    /* ── Responsive ── */
+    @media (max-width:768px) {
+      nav { padding:14px 24px; }
+      .logo-text h1 { font-size:16px; }
+      .page-wrapper { padding:110px 16px 60px; }
+      .form-card { padding:30px 22px; }
+      .page-heading h2 { font-size:30px; }
+      .col-3, .col-2, .col-2-w, .address-grid, .sys-row, .name-row { grid-template-columns:1fr; }
+      .dob-inputs { flex-wrap:nowrap; }
+      .btn-submit { width:100%; padding:15px 24px; }
+    }
+    @media (max-width:480px) {
+      .back-btn span { display:none; }
+      .back-btn { padding:10px 14px; }
     }
   </style>
 </head>
 <body>
-<div class="form-wrapper">
 
-  <div class="form-banner" id="formBanner"></div>
+  <!-- Animated Canvas Background -->
+  <canvas id="particleCanvas"></canvas>
 
-  <div class="header">
-    <h1>Acharya Edu Update</h1>
-    <p class="sub1">Public Speaking and Educational Hub</p>
-    <p class="sub2">Home Tuition Admission Form</p>
+  <!-- Floating Orbs -->
+  <div class="floating-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
   </div>
 
-  <p class="section-note">Please fill out the form truthfully. Fields marked <span style="color:#c0392b;font-weight:700;">*</span> are required.</p>
+  <!-- Header -->
+  <header id="header">
+    <nav>
+      <a href="../index.html" class="logo-section">
+        <div class="logo-badge"><i class="fas fa-graduation-cap"></i></div>
+        <div class="logo-text">
+          <h1>ACHARYA.EDU</h1>
+          <p>Transforming Education</p>
+        </div>
+      </a>
+      <a href="../index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to Home</span>
+      </a>
+    </nav>
+  </header>
 
-  <!-- Title / First / Last -->
-  <div class="row row-3-col">
-    <div class="field-group">
-      <label class="field-label">Title <span class="req">*</span></label>
-      <select id="title">
-        <option value="" disabled selected>Select</option>
-        <option>Mr.</option>
-        <option>Mrs.</option>
-        <option>Miss</option>
-      </select>
-      <span class="err-msg" id="err-title">Please select a title.</span>
-    </div>
-    <div class="field-group">
-      <label class="field-label">First Name <span class="req">*</span></label>
-      <input type="text" id="firstName" placeholder="First name" />
-      <span class="err-msg" id="err-firstName">First name is required.</span>
-    </div>
-    <div class="field-group">
-      <label class="field-label">Last Name <span class="req">*</span></label>
-      <input type="text" id="lastName" placeholder="Last name" />
-      <span class="err-msg" id="err-lastName">Last name is required.</span>
-    </div>
-  </div>
+  <div class="page-wrapper">
 
-  <!-- DOB / Mobile / Home Phone -->
-  <div class="row row-dob">
-    <div class="field-group">
-      <label class="field-label">Date of Birth (DD / MM / YYYY)</label>
-      <div class="dob-inputs">
-        <input class="dob-dd" type="text" placeholder="DD" maxlength="2" />
-        <input class="dob-mm" type="text" placeholder="MM" maxlength="2" />
-        <input class="dob-yyyy" type="text" placeholder="YYYY" maxlength="4" />
+    <!-- Page heading -->
+    <div class="page-heading">
+      <div class="page-label"><i class="fas fa-file-alt" style="font-size:11px;"></i> Admissions Open</div>
+      <h2>Home Tuition <span>Admission Form</span></h2>
+      <p>Fill in the details below to enroll with Acharya Edu Update. Fields marked <span style="color:#e74c3c;font-weight:700;">*</span> are required.</p>
+    </div>
+
+    <!-- Form card -->
+    <div class="form-card">
+
+      <div class="form-banner" id="formBanner"></div>
+
+      <!-- Personal Info -->
+      <p class="form-section-title"><i class="fas fa-user" style="font-size:13px;opacity:0.8;"></i> Personal Information</p>
+
+      <!-- Title / First / Last -->
+      <div class="row col-3">
+        <div class="field-group">
+          <label class="field-label">Title <span class="req">*</span></label>
+          <select id="title">
+            <option value="" disabled selected>Select</option>
+            <option>Mr.</option>
+            <option>Mrs.</option>
+            <option>Miss</option>
+          </select>
+          <span class="err-msg" id="err-title">Please select a title.</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label">First Name <span class="req">*</span></label>
+          <input type="text" id="firstName" placeholder="First name"/>
+          <span class="err-msg" id="err-firstName">First name is required.</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Last Name <span class="req">*</span></label>
+          <input type="text" id="lastName" placeholder="Last name"/>
+          <span class="err-msg" id="err-lastName">Last name is required.</span>
+        </div>
       </div>
-    </div>
-    <div class="field-group">
-      <label class="field-label">Mobile Phone <span class="req">*</span></label>
-      <input type="tel" id="mobilePhone" placeholder="98XXXXXXXX" maxlength="10" />
-      <span class="err-msg" id="err-mobilePhone">Must be exactly 10 digits.</span>
-    </div>
-    <div class="field-group">
-      <label class="field-label">Home Phone</label>
-      <input type="tel" placeholder="Landline number" />
-    </div>
-  </div>
 
-  <!-- Address — zip removed, only State remains on the right -->
-  <div class="address-grid">
-    <div class="field-group">
-      <label class="field-label">Address</label>
-      <textarea placeholder="Street address, City..."></textarea>
-    </div>
-    <div class="address-right-stack">
-      <div class="field-group">
-        <label class="field-label">State / Province</label>
-        <input type="text" placeholder="State" />
+      <!-- DOB / Mobile / Home Phone -->
+      <div class="row" style="grid-template-columns:auto 1fr 1fr;gap:16px;margin-bottom:18px;align-items:end;">
+        <div class="field-group">
+          <label class="field-label">Date of Birth (DD / MM / YYYY)</label>
+          <div class="dob-inputs">
+            <input class="dob-dd" type="text" placeholder="DD" maxlength="2"/>
+            <input class="dob-mm" type="text" placeholder="MM" maxlength="2"/>
+            <input class="dob-yyyy" type="text" placeholder="YYYY" maxlength="4"/>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Mobile Phone <span class="req">*</span></label>
+          <input type="tel" id="mobilePhone" placeholder="98XXXXXXXX" maxlength="10"/>
+          <span class="err-msg" id="err-mobilePhone">Must be exactly 10 digits.</span>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Home Phone</label>
+          <input type="tel" placeholder="Landline number"/>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Guardian Name only (student/applicant field removed) -->
-  <div class="row" style="grid-template-columns:1fr;">
-    <div class="field-group">
-      <label class="field-label">Guardian Name <span class="req">*</span></label>
-      <input type="text" id="guardianInput" placeholder="Parent / Guardian name" />
-      <span class="err-msg" id="err-guardianInput">Guardian name is required.</span>
-    </div>
-  </div>
-
-  <!-- Email / Work Hours -->
-  <div class="row row-email">
-    <div class="field-group">
-      <label class="field-label">Work / Guardian Email</label>
-      <input type="email" placeholder="email@example.com" />
-    </div>
-    <div class="field-group">
-      <label class="field-label">Work Hours</label>
-      <div class="hours-pair">
-        <input type="text" placeholder="From" />
-        <input type="text" placeholder="To" />
+      <!-- Address -->
+      <div class="address-grid">
+        <div class="field-group">
+          <label class="field-label">Address</label>
+          <textarea placeholder="Street address, City..."></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">State / Province</label>
+          <input type="text" placeholder="State"/>
+        </div>
       </div>
+
+      <hr class="sep"/>
+
+      <!-- Guardian Info -->
+      <p class="form-section-title"><i class="fas fa-users" style="font-size:13px;opacity:0.8;"></i> Guardian & Contact</p>
+
+      <!-- Guardian Name -->
+      <div class="row col-1">
+        <div class="field-group">
+          <label class="field-label">Guardian Name <span class="req">*</span></label>
+          <input type="text" id="guardianInput" placeholder="Parent / Guardian full name"/>
+          <span class="err-msg" id="err-guardianInput">Guardian name is required.</span>
+        </div>
+      </div>
+
+      <!-- Email / Work Hours -->
+      <div class="row col-2-w">
+        <div class="field-group">
+          <label class="field-label">Work / Guardian Email</label>
+          <input type="email" placeholder="email@example.com"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Work Hours</label>
+          <div class="hours-pair">
+            <input type="text" placeholder="From"/>
+            <input type="text" placeholder="To"/>
+          </div>
+        </div>
+      </div>
+
+      <!-- Occupation / Guardian Contact -->
+      <div class="row col-2">
+        <div class="field-group">
+          <label class="field-label">Business Type / Occupation</label>
+          <input type="text" placeholder="e.g. Private, Government, Self-employed"/>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Guardian Contact Number <span class="req">*</span></label>
+          <input type="tel" id="guardianContact" placeholder="98XXXXXXXX" maxlength="10"/>
+          <span class="err-msg" id="err-guardianContact">Must be exactly 10 digits.</span>
+        </div>
+      </div>
+
+      <hr class="sep"/>
+
+      <!-- Enrollment Details -->
+      <p class="form-section-title"><i class="fas fa-calendar-alt" style="font-size:13px;opacity:0.8;"></i> Enrollment Details</p>
+
+      <!-- Start / End Date -->
+      <div class="sys-row">
+        <div class="sys-cell">
+          <span class="sc-label">Start Date <span class="req">*</span></span>
+          <input type="datetime-local" id="startDate"/>
+          <span class="sys-cell-err" id="err-startDate">Start date is required.</span>
+        </div>
+        <div class="sys-cell">
+          <span class="sc-label">End Date <span class="req">*</span></span>
+          <input type="datetime-local" id="endDate"/>
+          <span class="sys-cell-err" id="err-endDate">End date is required.</span>
+        </div>
+      </div>
+
+      <!-- Payment System / Amount -->
+      <div class="sys-row">
+        <div class="sys-cell">
+          <span class="sc-label">Payment System</span>
+          <select id="paymentSystemSelect">
+            <option value="" disabled selected>Select</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Custom">Custom</option>
+          </select>
+        </div>
+        <div class="sys-cell cell-gold">
+          <span class="sc-label">Amount</span>
+          <select id="amount">
+            <option value="" disabled selected>Select Grade</option>
+            <option value="Grade below 5 – NPR 8,000">Grade below 5 – NPR 8,000</option>
+            <option value="Grade 6–8 – NPR 10,000">Grade 6–8 – NPR 10,000</option>
+            <option value="Grade 9–10 – NPR 13,500">Grade 9–10 – NPR 13,500</option>
+            <option value="Grade 11–12 – NPR 16,000">Grade 11–12 – NPR 16,000</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Period System / Advance -->
+      <div class="sys-row">
+        <div class="sys-cell">
+          <span class="sc-label">Period System</span>
+          <select id="periodSystem">
+            <option value="" disabled selected>Select Period</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Custom">Custom</option>
+          </select>
+        </div>
+        <div class="sys-cell cell-dark">
+          <span class="sc-label">Advance</span>
+          <input type="text" id="advance" placeholder="NPR 0,000"/>
+        </div>
+      </div>
+
+      <hr class="sep"/>
+
+      <!-- Terms -->
+      <p class="terms">By submitting this form, I agree to the <span>Terms & Conditions</span> of Acharya Edu Update.</p>
+
+      <!-- Names -->
+      <div class="name-row">
+        <div class="name-box">
+          <div class="nb-role">Tutor</div>
+          <div class="nb-name">Aashish Acharya</div>
+        </div>
+        <div class="name-box">
+          <div class="nb-role">Guardian</div>
+          <div class="nb-name" id="sigGuardianName">&nbsp;</div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="submit-wrap">
+        <button class="btn-submit" id="submitBtn" type="button">
+          <i class="fas fa-paper-plane" style="margin-right:10px;"></i>Submit Admission Form
+        </button>
+      </div>
+
+    </div><!-- /form-card -->
+
+    <!-- Footer -->
+    <div class="form-footer">
+      <p>Subscribe for free educational content</p>
+      <a class="yt-link" href="https://www.youtube.com/@acharyaeduupdate7267" target="_blank" rel="noopener noreferrer">
+        <div class="yt-icon"></div>
+        <div class="yt-text">Acharya Edu Update<br><span style="opacity:0.7;font-size:11px;">Aashish Acharya (CEO)</span></div>
+      </a>
     </div>
-  </div>
 
-  <!-- Occupation / Guardian Contact -->
-  <div class="row row-biz">
-    <div class="field-group">
-      <label class="field-label">Business Type / Occupation</label>
-      <input type="text" placeholder="e.g. Private, Government, Self-employed" />
-    </div>
-    <div class="field-group">
-      <label class="field-label">Guardian Contact Number <span class="req">*</span></label>
-      <input type="tel" id="guardianContact" placeholder="98XXXXXXXX" maxlength="10" />
-      <span class="err-msg" id="err-guardianContact">Must be exactly 10 digits.</span>
-    </div>
-  </div>
+  </div><!-- /page-wrapper -->
 
-  <hr class="sep" />
+  <script>
+    /* ══════════════════════════════════════════
+       PARTICLE CANVAS (same as main site)
+    ══════════════════════════════════════════ */
+    const canvas = document.getElementById('particleCanvas');
+    const ctx    = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null, radius: 150 };
 
-  <!-- Start / End Date -->
-  <div class="system-row">
-    <div class="system-cell">
-      <span class="sc-label">Start Date <span class="req">*</span></span>
-      <input type="datetime-local" id="startDate" />
-      <span class="system-cell-err" id="err-startDate">Start date is required.</span>
-    </div>
-    <div class="system-cell">
-      <span class="sc-label">End Date <span class="req">*</span></span>
-      <input type="datetime-local" id="endDate" />
-      <span class="system-cell-err" id="err-endDate">End date is required.</span>
-    </div>
-  </div>
-
-  <!-- Payment System / Amount (grade-based) -->
-  <div class="system-row">
-    <div class="system-cell">
-      <span class="sc-label">Payment System</span>
-      <select id="paymentSystemSelect">
-        <option value="" disabled selected>Select</option>
-        <option value="Monthly">Monthly</option>
-        <option value="Weekly">Weekly</option>
-        <option value="Custom">Custom</option>
-      </select>
-    </div>
-    <div class="system-cell amount-cell">
-      <span class="sc-label">Amount :</span>
-      <select id="amount">
-        <option value="" disabled selected>Select Grade</option>
-        <option value="Grade below 5 – NPR 8,000">Grade below 5 – NPR 8,000</option>
-        <option value="Grade 6–8 – NPR 10,000">Grade 6–8 – NPR 10,000</option>
-        <option value="Grade 9–10 – NPR 13,500">Grade 9–10 – NPR 13,500</option>
-        <option value="Grade 11–12 – NPR 16,000">Grade 11–12 – NPR 16,000</option>
-      </select>
-    </div>
-  </div>
-
-  <!-- Period System (dropdown) / Advance -->
-  <div class="system-row">
-    <div class="system-cell">
-      <span class="sc-label">Period System</span>
-      <select id="periodSystem">
-        <option value="" disabled selected>Select Period</option>
-        <option value="Monthly">Monthly</option>
-        <option value="Custom">Custom</option>
-      </select>
-    </div>
-    <div class="system-cell advance-cell">
-      <span class="sc-label">Advance :</span>
-      <input type="text" id="advance" placeholder="NPR 0,000" />
-    </div>
-  </div>
-
-  <p class="terms">I therefore agree to the terms and conditions of Acharya Edu Update.</p>
-
-  <!-- Names only — no signature lines (online form) -->
-  <div class="sig-row">
-    <div class="sig-box">
-      <div class="sig-role">Tutor Name</div>
-      <div class="sig-name">Aashish Acharya</div>
-    </div>
-    <div class="sig-box">
-      <div class="sig-role">Guardian Name</div>
-      <div class="sig-name" id="sigGuardianName">&nbsp;</div>
-    </div>
-  </div>
-
-  <!-- Submit -->
-  <div class="submit-wrap">
-    <button class="btn-submit" id="submitBtn" type="button">Submit Admission Form</button>
-  </div>
-
-  <!-- Footer -->
-  <div class="footer">
-    <p class="sub-text">Subscribe us on YouTube</p>
-    <!-- ⚠️ Replace the href below with the actual YouTube channel link -->
-    <a class="yt-row" href="https://www.youtube.com/channel/UCqhYYy5SR4vp0dzsBqyEJYw" target="_blank" rel="noopener noreferrer">
-      <div class="yt-icon"></div>
-      <div class="yt-text">Acharya Edu Update<br>Aashish Acharya (CEO)</div>
-    </a>
-  </div>
-
-</div>
-<script>
-  /* ── Guardian name mirror ── */
-  document.getElementById('guardianInput').addEventListener('input', function () {
-    document.getElementById('sigGuardianName').textContent = this.value.trim() || '\u00A0';
-  });
-
-  /* ── Phone: digits only ── */
-  ['mobilePhone','guardianContact'].forEach(id => {
-    document.getElementById(id).addEventListener('input', function () {
-      this.value = this.value.replace(/\D/g,'').slice(0,10);
-    });
-  });
-
-  /* ── Error helpers ── */
-  function setErr(id, msg) {
-    const el = document.getElementById(id);
-    const er = document.getElementById('err-'+id);
-    if (el) el.classList.add('invalid');
-    if (er) { er.textContent = msg; er.classList.add('show'); }
-  }
-  function clrErr(id) {
-    const el = document.getElementById(id);
-    const er = document.getElementById('err-'+id);
-    if (el) el.classList.remove('invalid');
-    if (er) er.classList.remove('show');
-  }
-  function setSysErr(fid, eid, msg) {
-    const el = document.getElementById(fid);
-    const er = document.getElementById(eid);
-    if (el) el.classList.add('invalid');
-    if (er) { er.textContent = msg; er.classList.add('show'); }
-  }
-  function clrSysErr(fid, eid) {
-    const el = document.getElementById(fid);
-    const er = document.getElementById(eid);
-    if (el) el.classList.remove('invalid');
-    if (er) er.classList.remove('show');
-  }
-
-  /* Auto-clear on change */
-  ['title','firstName','lastName','mobilePhone','guardianInput','guardianContact'].forEach(id => {
-    const el = document.getElementById(id);
-    el.addEventListener('input',  () => clrErr(id));
-    el.addEventListener('change', () => clrErr(id));
-  });
-  document.getElementById('startDate').addEventListener('change', () => clrSysErr('startDate','err-startDate'));
-  document.getElementById('endDate').addEventListener('change',   () => clrSysErr('endDate','err-endDate'));
-
-  /* ── Validate ── */
-  function validate() {
-    let ok = true;
-    const checks = [
-      ['title',          v => !!v,               'Please select a title.'],
-      ['firstName',      v => !!v.trim(),         'First name is required.'],
-      ['lastName',       v => !!v.trim(),         'Last name is required.'],
-      ['mobilePhone',    v => /^\d{10}$/.test(v), 'Must be exactly 10 digits.'],
-      ['guardianInput',  v => !!v.trim(),         'Guardian name is required.'],
-      ['guardianContact',v => /^\d{10}$/.test(v), 'Must be exactly 10 digits.'],
-    ];
-    checks.forEach(([id, test, msg]) => {
-      const val = document.getElementById(id).value;
-      if (!test(val)) { setErr(id, msg); ok = false; } else clrErr(id);
-    });
-    if (!document.getElementById('startDate').value) { setSysErr('startDate','err-startDate','Start date & time is required.'); ok = false; } else clrSysErr('startDate','err-startDate');
-    if (!document.getElementById('endDate').value)   { setSysErr('endDate','err-endDate','End date & time is required.'); ok = false; }   else clrSysErr('endDate','err-endDate');
-    return ok;
-  }
-
-  /* ── Collect data ── */
-  function collect() {
-    const g = id => (document.getElementById(id)||{}).value||'';
-    const q = sel => { const e=document.querySelector(sel); return e?e.value:''; };
-    return {
-      Title:             g('title'),
-      'First Name':      g('firstName'),
-      'Last Name':       g('lastName'),
-      'Date of Birth':   [q('.dob-dd'),q('.dob-mm'),q('.dob-yyyy')].filter(Boolean).join('/') || '—',
-      'Mobile Phone':    g('mobilePhone'),
-      'Home Phone':      q('input[placeholder="Landline number"]'),
-      Address:           q('textarea'),
-      'State / Province':q('input[placeholder="State"]'),
-      'Guardian Name':   g('guardianInput'),
-      'Guardian Email':  q('input[type="email"]'),
-      'Work Hours From': q('input[placeholder="From"]'),
-      'Work Hours To':   q('input[placeholder="To"]'),
-      Occupation:        q('input[placeholder="e.g. Private, Government, Self-employed"]'),
-      'Guardian Contact':g('guardianContact'),
-      'Start Date':      g('startDate'),
-      'End Date':        g('endDate'),
-      'Payment System':  g('paymentSystemSelect'),
-      Amount:            g('amount'),
-      'Period System':   g('periodSystem'),
-      Advance:           g('advance'),
-    };
-  }
-
-  /* ── Submit ── */
-  document.getElementById('submitBtn').addEventListener('click', async function () {
-    if (!validate()) {
-      const first = document.querySelector('.invalid');
-      if (first) first.scrollIntoView({ behavior:'smooth', block:'center' });
-      return;
+    function setCanvasSize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
 
-    const btn    = this;
-    const banner = document.getElementById('formBanner');
-    btn.disabled = true;
-    btn.textContent = 'Submitting…';
-    banner.className = 'form-banner';
-
-    const FORMSPREE_URL = 'https://formspree.io/f/xpqoqnea';
-
-    try {
-      const res = await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(collect()),
-      });
-      if (res.ok) {
-        banner.textContent = '✓ Submitted successfully! A copy will be sent to acharyaeduupdate@gmail.com.';
-        banner.classList.add('success','show');
-        btn.textContent = 'Submitted ✓';
-      } else {
-        const j = await res.json().catch(()=>({}));
-        throw new Error(j.error || 'Server error');
+    class Particle {
+      constructor() {
+        this.x       = Math.random() * canvas.width;
+        this.y       = Math.random() * canvas.height;
+        this.size    = Math.random() * 3 + 1;
+        this.speedX  = Math.random() * 0.5 - 0.25;
+        this.speedY  = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.5 + 0.2;
       }
-    } catch (e) {
-      banner.textContent = '✗ Submission failed: ' + e.message + '. Please try again.';
-      banner.classList.add('error','show');
-      btn.disabled = false;
-      btn.textContent = 'Submit Admission Form';
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x > canvas.width  || this.x < 0) this.speedX = -this.speedX;
+        if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+        const dx = mouse.x - this.x, dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < mouse.radius) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          this.x -= (dx/dist) * force * 2;
+          this.y -= (dy/dist) * force * 2;
+        }
+      }
+      draw() {
+        ctx.fillStyle = `rgba(201,169,97,${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+        ctx.fill();
+      }
     }
-    banner.scrollIntoView({ behavior:'smooth', block:'center' });
-  });
-</script>
+
+    function initParticles() {
+      particles = [];
+      const n = (canvas.width * canvas.height) / 15000;
+      for (let i = 0; i < n; i++) particles.push(new Particle());
+    }
+
+    function connectParticles() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i+1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < 120) {
+            ctx.strokeStyle = `rgba(201,169,97,${(1 - d/120) * 0.2})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      connectParticles();
+      requestAnimationFrame(animateParticles);
+    }
+
+    window.addEventListener('mousemove', e => { mouse.x = e.x; mouse.y = e.y; });
+    window.addEventListener('mouseout',  () => { mouse.x = null; mouse.y = null; });
+    window.addEventListener('resize',    () => { setCanvasSize(); initParticles(); });
+
+    initParticles();
+    animateParticles();
+
+    /* ── Header scroll ── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    /* ── Guardian name mirror ── */
+    document.getElementById('guardianInput').addEventListener('input', function () {
+      document.getElementById('sigGuardianName').textContent = this.value.trim() || '\u00A0';
+    });
+
+    /* ── Phone: digits only ── */
+    ['mobilePhone','guardianContact'].forEach(id => {
+      document.getElementById(id).addEventListener('input', function () {
+        this.value = this.value.replace(/\D/g,'').slice(0,10);
+      });
+    });
+
+    /* ── Error helpers ── */
+    function setErr(id, msg) {
+      const el = document.getElementById(id), er = document.getElementById('err-'+id);
+      if (el) el.classList.add('invalid');
+      if (er) { er.textContent = msg; er.classList.add('show'); }
+    }
+    function clrErr(id) {
+      const el = document.getElementById(id), er = document.getElementById('err-'+id);
+      if (el) el.classList.remove('invalid');
+      if (er) er.classList.remove('show');
+    }
+    function setSysErr(fid, eid, msg) {
+      const el = document.getElementById(fid), er = document.getElementById(eid);
+      if (el) el.classList.add('invalid');
+      if (er) { er.textContent = msg; er.classList.add('show'); }
+    }
+    function clrSysErr(fid, eid) {
+      const el = document.getElementById(fid), er = document.getElementById(eid);
+      if (el) el.classList.remove('invalid');
+      if (er) er.classList.remove('show');
+    }
+
+    ['title','firstName','lastName','mobilePhone','guardianInput','guardianContact'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input',  () => clrErr(id));
+      el.addEventListener('change', () => clrErr(id));
+    });
+    document.getElementById('startDate').addEventListener('change', () => clrSysErr('startDate','err-startDate'));
+    document.getElementById('endDate').addEventListener('change',   () => clrSysErr('endDate','err-endDate'));
+
+    /* ── Validate ── */
+    function validate() {
+      let ok = true;
+      const checks = [
+        ['title',           v => !!v,                'Please select a title.'],
+        ['firstName',       v => !!v.trim(),          'First name is required.'],
+        ['lastName',        v => !!v.trim(),          'Last name is required.'],
+        ['mobilePhone',     v => /^\d{10}$/.test(v),  'Must be exactly 10 digits.'],
+        ['guardianInput',   v => !!v.trim(),          'Guardian name is required.'],
+        ['guardianContact', v => /^\d{10}$/.test(v),  'Must be exactly 10 digits.'],
+      ];
+      checks.forEach(([id, test, msg]) => {
+        const val = document.getElementById(id).value;
+        if (!test(val)) { setErr(id, msg); ok = false; } else clrErr(id);
+      });
+      if (!document.getElementById('startDate').value) { setSysErr('startDate','err-startDate','Start date & time is required.'); ok = false; } else clrSysErr('startDate','err-startDate');
+      if (!document.getElementById('endDate').value)   { setSysErr('endDate','err-endDate','End date & time is required.'); ok = false; }   else clrSysErr('endDate','err-endDate');
+      return ok;
+    }
+
+    /* ── Collect data ── */
+    function collect() {
+      const g = id => (document.getElementById(id)||{}).value||'';
+      const q = sel => { const e = document.querySelector(sel); return e ? e.value : ''; };
+      return {
+        Title:              g('title'),
+        'First Name':       g('firstName'),
+        'Last Name':        g('lastName'),
+        'Date of Birth':    [q('.dob-dd'),q('.dob-mm'),q('.dob-yyyy')].filter(Boolean).join('/') || '—',
+        'Mobile Phone':     g('mobilePhone'),
+        'Home Phone':       q('input[placeholder="Landline number"]'),
+        Address:            q('textarea'),
+        'State / Province': q('input[placeholder="State"]'),
+        'Guardian Name':    g('guardianInput'),
+        'Guardian Email':   q('input[type="email"]'),
+        'Work Hours From':  q('input[placeholder="From"]'),
+        'Work Hours To':    q('input[placeholder="To"]'),
+        Occupation:         q('input[placeholder="e.g. Private, Government, Self-employed"]'),
+        'Guardian Contact': g('guardianContact'),
+        'Start Date':       g('startDate'),
+        'End Date':         g('endDate'),
+        'Payment System':   g('paymentSystemSelect'),
+        Amount:             g('amount'),
+        'Period System':    g('periodSystem'),
+        Advance:            g('advance'),
+      };
+    }
+
+    /* ── Submit ── */
+    document.getElementById('submitBtn').addEventListener('click', async function () {
+      if (!validate()) {
+        const first = document.querySelector('.invalid');
+        if (first) first.scrollIntoView({ behavior:'smooth', block:'center' });
+        return;
+      }
+      const btn = this, banner = document.getElementById('formBanner');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right:10px;"></i>Submitting…';
+      banner.className = 'form-banner';
+
+      const FORMSPREE_URL = 'https://formspree.io/f/xpqoqnea';
+      try {
+        const res = await fetch(FORMSPREE_URL, {
+          method:'POST',
+          headers:{ 'Content-Type':'application/json', Accept:'application/json' },
+          body: JSON.stringify(collect()),
+        });
+        if (res.ok) {
+          banner.textContent = '✓ Submitted successfully! A confirmation will be sent to acharyaeduupdate@gmail.com.';
+          banner.classList.add('success','show');
+          btn.innerHTML = '<i class="fas fa-check" style="margin-right:10px;"></i>Submitted';
+        } else {
+          const j = await res.json().catch(()=>({}));
+          throw new Error(j.error || 'Server error');
+        }
+      } catch(e) {
+        banner.textContent = '✗ Submission failed: ' + e.message + '. Please try again.';
+        banner.classList.add('error','show');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right:10px;"></i>Submit Admission Form';
+      }
+      banner.scrollIntoView({ behavior:'smooth', block:'center' });
+    });
+
+    /* ── Ripple on submit button ── */
+    document.querySelector('.btn-submit').addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      const rect   = this.getBoundingClientRect();
+      const size   = Math.max(rect.width, rect.height);
+      ripple.style.cssText = `position:absolute;border-radius:50%;background:rgba(255,255,255,0.3);
+        width:${size}px;height:${size}px;
+        left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;
+        animation:ripple-out 0.6s ease-out forwards;pointer-events:none;`;
+      const style = document.createElement('style');
+      style.textContent = '@keyframes ripple-out{from{transform:scale(0);opacity:1}to{transform:scale(2);opacity:0}}';
+      document.head.appendChild(style);
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+  </script>
 </body>
 </html>
